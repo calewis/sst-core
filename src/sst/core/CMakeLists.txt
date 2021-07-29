@@ -69,11 +69,13 @@ add_executable(sstsim.x
   simulation_impl.h
 )
 
+add_subdirectory(${CMAKE_BINARY_DIR}/src/core/libltdl)
+
 target_include_directories(sstsim.x PRIVATE 
   ${CMAKE_CURRENT_BINARY_DIR} 
   ${CMAKE_BINARY_DIR}/src
   ${CMAKE_SOURCE_DIR}/../src 
-  ${CMAKE_CURRENT_SOURCE_DIR}/libltdl
+  ${CMAKE_CURRENT_BINARY_DIR}/libltdl
   ${CMAKE_CURRENT_SOURCE_DIR}
   )
-target_link_libraries(sstsim.x PUBLIC Python::Module MPI::MPI_C ZLIB::ZLIB HDF5::HDF5)
+target_link_libraries(sstsim.x PUBLIC Python::Module) 

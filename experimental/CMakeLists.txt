@@ -14,10 +14,14 @@ This process created the file `CMakeCache.txt' and the directory `CMakeFiles'.
 Please delete them.")
 endif()
 
-find_package(HDF5)
-find_package(MPI)
-find_package(ZLIB)
+#find_package(HDF5)
+#find_package(MPI)
+#find_package(ZLIB)
 find_package(Python REQUIRED COMPONENTS Development Interpreter)
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+# Defines everything we need for sst_config.h
+include(header_config)
 
 # Set variables for sst_config.h
 set(SST_CXXFLAGS ${CMAKE_CXX_FLAGS})

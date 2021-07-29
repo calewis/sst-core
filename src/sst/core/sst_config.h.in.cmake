@@ -128,10 +128,10 @@
 #cmakedefine HAVE_STRLCPY
 
 /* Define to 1 if you have the <sys/dl.h> header file. */
-#cmakedefine HAVE_SYS_DL_H
+#cmakedefine01 HAVE_SYS_DL_H 
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
-#cmakedefine HAVE_SYS_STAT_H
+#cmakedefine01 HAVE_SYS_STAT_H
 
 /* Define to 1 if you have the <sys/time.h> header file. */
 #cmakedefine HAVE_SYS_TIME_H
@@ -294,6 +294,9 @@
 
 /* Define to a type to use for 'error_t' if it is not otherwise available. */
 #cmakedefine error_t
+
+/* Define if using cmake */
+#cmakedefine SST_BUILD_WITH_CMAKE
 
 /* Define to `__inline__' or `__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
