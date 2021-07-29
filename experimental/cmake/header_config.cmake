@@ -22,25 +22,36 @@ check_include_file(dlfcn.h HAVE_DLFCN_H)
 check_include_file(sys/types HAVE_SYS_TYPES_H)
 check_include_file(unistd.h HAVE_UNISTD_H)
 
-execute_process(
-  COMMAND libtoolize --quiet --ltdl=${CMAKE_SOURCE_DIR}../src/sst/core/libltdl
-  RESULT_VARIABLE LTDL_RESULT
-  )
+include(CheckLibraryExists)
+check_library_exists(ltdl lt_dlinit "" HAVE_LTDL)
 
-if(LTDL_RESULT AND NOT LTDL_RESULT EQUAL 0)
-  if(NOT APPLE)
-    if(LTDL_RESULT AND NOT LTDL_RESULT EQUAL 0)
-      message(FATAL_ERROR "glibtoolize failed with: ${APPLE_LTDL_RESULT}")
-    endif(LTDL_RESULT AND NOT LTDL_RESULT EQUAL 0)
-
-  else(NOT APPLE)
+set(FOUND_EXTERNAL_LIBLTDL FALSE)
+if(NOT HAVE_LTDL)
+  include(ExternalProject)
+  if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libltdl)
+    find_program(LIBTOOLIZE NAMES libtoolize glibtoolize)
+    message(STATUS "Using ${LIBTOOLIZE} as libtoolize.")
     execute_process(
-      COMMAND glibtoolize --quiet --ltdl=${CMAKE_SOURCE_DIR}../src/sst/core/libltdl
-      RESULT_VARIABLE APPLE_LTDL_RESULT
+      COMMAND ${LIBTOOLIZE} --quiet --ltdl=${CMAKE_CURRENT_BINARY_DIR}/libltdl
+      RESULT_VARIABLE LIBTOOLIZE_RESULT
       )
 
-    if(APPLE_LTDL_RESULT AND NOT APPLE_LTDL_RESULT EQUAL 0)
-      message(FATAL_ERROR "glibtoolize failed with: ${APPLE_LTDL_RESULT}")
-    endif(APPLE_LTDL_RESULT AND NOT APPLE_LTDL_RESULT EQUAL 0)
-  endif(NOT APPLE)
-endif(LTDL_RESULT AND NOT LTDL_RESULT EQUAL 0)
+    if(LIBTOOLIZE_RESULT AND NOT LIBTOOLIZE_RESULT EQUAL 0)
+      message(FATAL_ERROR 
+        "${LIBTOOLIZE} failed to generate libltdl with result ${LIBTOOLIZE_RESULT}.")
+    endif(LIBTOOLIZE_RESULT AND NOT LIBTOOLIZE_RESULT EQUAL 0)
+  endif(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libltdl)
+
+  ExternalProject_Add(libltdl
+    SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/libltdl
+    BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/libltdl
+    INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/contrib/libltdl
+    CONFIGURE_COMMAND aclocal && autoconf && automake && ./configure --prefix=${CMAKE_CURRENT_BINARY_DIR}/contrib/libltdl --enable-ltdl-install
+    BUILD_COMMAND make
+    INSTALL_COMMAND make install
+  )
+else(NOT HAVE_LTDL)
+  set(FOUND_EXTERNAL_LIBLTDL TRUE)
+  add_custom_target(libltdl)
+endif(NOT HAVE_LTDL)
+

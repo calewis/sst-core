@@ -69,13 +69,25 @@ add_executable(sstsim.x
   simulation_impl.h
 )
 
-add_subdirectory(${CMAKE_BINARY_DIR}/src/core/libltdl)
+add_dependencies(sstsim.x libltdl)
+if(NOT FOUND_EXTERNAL_LIBLTDL)
+  target_include_directories(sstsim.x PRIVATE 
+    ${CMAKE_BINARY_DIR}/contrib/libltdl/include
+    )
+  target_link_directories(sstsim.x PRIVATE 
+    ${CMAKE_BINARY_DIR}/contrib/libltdl/lib)
+endif(NOT FOUND_EXTERNAL_LIBLTDL)
 
 target_include_directories(sstsim.x PRIVATE 
   ${CMAKE_CURRENT_BINARY_DIR} 
   ${CMAKE_BINARY_DIR}/src
   ${CMAKE_SOURCE_DIR}/../src 
-  ${CMAKE_CURRENT_BINARY_DIR}/libltdl
   ${CMAKE_CURRENT_SOURCE_DIR}
   )
-target_link_libraries(sstsim.x PUBLIC Python::Module) 
+
+target_link_libraries(sstsim.x 
+  PUBLIC Python::Module 
+  PRIVATE ltdl
+  ) 
+
+
