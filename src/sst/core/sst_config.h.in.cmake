@@ -95,7 +95,7 @@
 #cmakedefine HAVE_PRELOADED_SYMBOLS
 
 /* Define to 1 if you have the <Python.h> header file. */
-#cmakedefine HAVE_PYTHON_H
+#cmakedefine HAVE_PYTHON_H 1
 
 /* Define to 1 if you have the `readdir' function. */
 #cmakedefine HAVE_READDIR
@@ -216,7 +216,7 @@
 #cmakedefine SST_CFLAGS
 
 /* Defines compile for Mac OS-X */
-#cmakedefine SST_COMPILE_MACOSX
+#cmakedefine SST_COMPILE_MACOSX 1
 
 /* Define if you have the MPI library. */
 #cmakedefine SST_CONFIG_HAVE_MPI

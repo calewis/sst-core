@@ -3,6 +3,19 @@ set(SST_BUILD_WITH_CMAKE ON)
 set(SST_CXXFLAGS ${CMAKE_CXX_FLAGS})
 set(SST_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(PACKAGE_VERSION ${CMAKE_PROJECT_VERSION})
+
+# TODO CHECK FOR THIS
+set(__STDC_FORMAT_MACROS ON)
+
+if(Python_VERSION AND Python_VERSION_MAJOR GREATER_EQUAL 3)
+  set(SST_CONFIG_HAVE_PYTHON3 ON)
+  set(HAVE_PYTHON_H ON)
+endif(Python_VERSION AND Python_VERSION_MAJOR GREATER_EQUAL 3)
+
+if(APPLE)
+  set(SST_COMPILE_MACOSX ON)
+endif(APPLE)
+
 execute_process(
          COMMAND git rev-parse HEAD
          RESULT_VARIABLE HASH_RESULT
@@ -23,11 +36,16 @@ check_include_file(sys/types HAVE_SYS_TYPES_H)
 check_include_file(unistd.h HAVE_UNISTD_H)
 
 include(CheckLibraryExists)
-check_library_exists(ltdl lt_dlinit "" HAVE_LTDL)
+check_library_exists(m sin "" HAVE_LIBM)
+if(NOT HAVE_LIBM)
+  message(FATAL_ERROR "Failed to detect libm")
+endif(NOT HAVE_LIBM)
 
-set(FOUND_EXTERNAL_LIBLTDL FALSE)
-if(NOT HAVE_LTDL)
+check_library_exists(ltdl lt_dlinit "" HAVE_LTDL_EXTERNAL)
+if(NOT HAVE_LTDL_EXTERNAL)
   include(ExternalProject)
+  set(LIBLTDL_INSTALL_DIRS "${CMAKE_BINARY_DIR}/contrib/install/" 
+    CACHE PATH "Path to the libldl install")
   if(NOT EXISTS ${CMAKE_CURRENT_BINARY_DIR}/libltdl)
     find_program(LIBTOOLIZE NAMES libtoolize glibtoolize)
     message(STATUS "Using ${LIBTOOLIZE} as libtoolize.")
@@ -45,13 +63,21 @@ if(NOT HAVE_LTDL)
   ExternalProject_Add(libltdl
     SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/libltdl
     BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/libltdl
-    INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/contrib/libltdl
-    CONFIGURE_COMMAND aclocal && autoconf && automake && ./configure --prefix=${CMAKE_CURRENT_BINARY_DIR}/contrib/libltdl --quiet --enable-ltdl-install
+    INSTALL_DIR ${LIBLTDL_INSTALL_DIRS}
+    CONFIGURE_COMMAND aclocal && autoconf && automake && ./configure --prefix=${LIBLTDL_INSTALL_DIRS} --quiet --enable-ltdl-install
     BUILD_COMMAND make --quiet
     INSTALL_COMMAND make --quiet install
   )
-else(NOT HAVE_LTDL)
-  set(FOUND_EXTERNAL_LIBLTDL TRUE)
+  # TODO this is probably not the right way to set these
+  set(LIBLTDL_INCLUCE_DIRS "${LIBLTDL_INSTALL_DIRS}/include" 
+    CACHE PATH "Location of the installed libltdl headers")
+  set(LIBLTDL_LIBRARIES "${LIBLTDL_INSTALL_DIRS}/lib/libltdl.a" 
+    CACHE FILEPATH "Path to the install libltdl library")
+else(NOT HAVE_LTDL_EXTERNAL)
   add_custom_target(libltdl)
-endif(NOT HAVE_LTDL)
-
+  set(LIBLTDL_INCLUCE_DIRS "")
+  set(LIBLTDL_LIBRARIES "ltdl")
+endif(NOT HAVE_LTDL_EXTERNAL)
+message(STATUS "libltdl includes ${LIBLTDL_INCLUCE_DIRS}.")
+message(STATUS "libltdl library ${LIBLTDL_LIBRARIES}.")
+message(STATUS "libltdl install ${LIBLTDL_INSTALL_DIRS}.")
