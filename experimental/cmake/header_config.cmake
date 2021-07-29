@@ -46,9 +46,9 @@ if(NOT HAVE_LTDL)
     SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/libltdl
     BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/libltdl
     INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/contrib/libltdl
-    CONFIGURE_COMMAND aclocal && autoconf && automake && ./configure --prefix=${CMAKE_CURRENT_BINARY_DIR}/contrib/libltdl --enable-ltdl-install
-    BUILD_COMMAND make
-    INSTALL_COMMAND make install
+    CONFIGURE_COMMAND aclocal && autoconf && automake && ./configure --prefix=${CMAKE_CURRENT_BINARY_DIR}/contrib/libltdl --quiet --enable-ltdl-install
+    BUILD_COMMAND make --quiet
+    INSTALL_COMMAND make --quiet install
   )
 else(NOT HAVE_LTDL)
   set(FOUND_EXTERNAL_LIBLTDL TRUE)
