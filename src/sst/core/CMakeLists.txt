@@ -154,7 +154,7 @@ target_compile_definitions(sst_core_lib PUBLIC
 target_compile_definitions(sst_tiny_xml PUBLIC TIXML_USE_STL)
 
 target_link_libraries(sst_core_lib
-  PUBLIC Python::Python ${LIBLTDL_LIBRARIES} m
+  PUBLIC Python::Python ${LIBLTDL_LIBRARIES} m ${CMAKE_DL_LIBS}
   ) 
 
 if(MPI_FOUND)
@@ -170,19 +170,21 @@ if(HDF5_FOUND)
   target_link_libraries(sst_core_lib PUBLIC HDF5::HDF5) 
 endif(HDF5_FOUND)
 
-add_executable(sstsim main.cc)
+add_executable(sstsim.x main.cc)
 add_executable(sst_info bootsstinfo.cc)
 add_executable(sstinfo.x sstinfo.cc)
 add_executable(sst bootsst.cc)
 add_executable(sstconfig sstconfigtool.cc)
 add_executable(sst_register sstregistertool.cc)
 
-target_link_libraries(sstsim PRIVATE sst_core_lib sst_env_lib)
+target_link_libraries(sstsim.x PRIVATE sst_core_lib sst_env_lib)
 target_link_libraries(sstinfo.x PRIVATE sst_core_lib sst_tiny_xml sst_env_lib)
 target_link_libraries(sst_info PRIVATE sst_env_lib sst_boot_lib)
 target_link_libraries(sst PRIVATE sst_boot_lib sst_env_lib)
 target_link_libraries(sstconfig PRIVATE sst_env_lib)
 target_link_libraries(sst_register PRIVATE sst_env_lib)
 
-
-
+if(NOT APPLE)
+target_link_libraries(sstinfo.x PRIVATE rt)
+target_link_libraries(sstsim.x PRIVATE rt)
+endif(NOT APPLE)
