@@ -13,7 +13,7 @@
 #define SST_CORE_THREADSAFE_H
 
 #if ( defined(__amd64) || defined(__amd64__) || defined(__x86_64) || defined(__x86_64__) )
-#include <x86intrin.h>
+#include <emmintrin.h>
 #define sst_pause() _mm_pause()
 #elif (defined(__arm__) || defined(__arm) || defined(__aarch64__))
 #define sst_pause() __asm__ __volatile__("yield")
@@ -22,7 +22,7 @@
 #endif
 
 #include <atomic>
-#include <condition_variable>
+// #include <condition_variable>
 #include <mutex>
 #include <thread>
 #include <vector>
