@@ -16,7 +16,9 @@
 #include "sst/core/params.h"
 #include "sst/core/sst_types.h"
 
+#include <iostream>
 #include <mutex>
+#include <sstream>
 #include <stdio.h>
 
 /* Forward declare for Friendship */

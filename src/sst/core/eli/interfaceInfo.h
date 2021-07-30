@@ -12,6 +12,11 @@
 #ifndef SST_CORE_ELI_INTERFACE_INFO_H
 #define SST_CORE_ELI_INTERFACE_INFO_H
 
+#include "sst/core/warnmacros.h"
+
+#include <iosfwd>
+#include <string>
+
 namespace SST {
 namespace ELI {
 
@@ -20,7 +25,7 @@ class ProvidesInterface
 public:
     const std::string& getInterface() const { return iface_; }
 
-    void toString(std::ostream& os) const { os << "      Interface: " << iface_ << "\n"; }
+    void toString(std::ostream& os) const; 
 
     template <class XMLNode>
     void outputXML(XMLNode* node) const

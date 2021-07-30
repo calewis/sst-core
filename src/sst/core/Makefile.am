@@ -158,6 +158,7 @@ nobase_nodist_sst_HEADERS = \
 
 sst_core_sources = \
 	action.cc \
+	activity.cc \
 	clock.cc \
 	baseComponent.cc \
 	component.cc \
@@ -173,6 +174,8 @@ sst_core_sources = \
 	env/envconfig.cc \
 	eli/elibase.cc \
 	eli/elementinfo.cc \
+	eli/categoryInfo.cc \
+	eli/interfaceInfo.cc \
 	elemLoader.cc \
 	event.cc \
 	exit.cc \
@@ -193,6 +196,7 @@ sst_core_sources = \
 	unitAlgebra.cc \
 	mempool.cc \
 	module.cc \
+	rankInfo.cc \
 	sstpart.cc \
 	timeVortex.cc \
 	threadsafe.cc \

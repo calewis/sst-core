@@ -12,6 +12,8 @@
 #include "sst_config.h"
 
 #include "TestEvent.h"
+#include "sst/core/serialization/serializable.h"
+
 
 using namespace SST;
 using namespace SST::Interfaces;
@@ -24,3 +26,9 @@ TestEvent::~TestEvent()
 {
     if ( print_on_delete ) { printf("Deleting TestEvent\n"); }
 }
+
+  void TestEvent::serialize_order(SST::Core::Serialization::serializer& ser)
+  {
+      Event::serialize_order(ser);
+      ser& count;
+  }

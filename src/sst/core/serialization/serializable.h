@@ -12,6 +12,7 @@
 #ifndef SST_CORE_SERIALIZATION_SERIALIZABLE_H
 #define SST_CORE_SERIALIZATION_SERIALIZABLE_H
 
+#include "sst/core/serialization/serializable_fwd.h"
 #include "sst/core/serialization/serializer.h"
 #include "sst/core/warnmacros.h"
 
@@ -115,28 +116,6 @@ ct_hash(const char* str)
 
 } // namespace pvt
 
-class serializable
-{
-public:
-    static constexpr uint32_t NullClsId = std::numeric_limits<uint32_t>::max();
-
-    virtual const char* cls_name() const = 0;
-
-    virtual void serialize_order(serializer& ser) = 0;
-
-    virtual uint32_t    cls_id() const             = 0;
-    virtual std::string serialization_name() const = 0;
-
-    virtual ~serializable() {}
-
-protected:
-    typedef enum { ConstructorFlag } cxn_flag_t;
-    static void serializable_abort(uint32_t line, const char* file, const char* func, const char* obj);
-};
-
-template <class T>
-class serializable_type
-{};
 
 #define ImplementVirtualSerializable(obj) \
 protected:                                \
@@ -187,67 +166,6 @@ private:                                                                        
 public:                            \
     ImplementSerializableDefaultConstructor(SER_FORWARD_AS_ONE(__VA_ARGS__))
 
-class serializable_builder
-{
-public:
-    virtual serializable* build() const = 0;
-
-    virtual ~serializable_builder() {}
-
-    virtual const char* name() const = 0;
-
-    virtual uint32_t cls_id() const = 0;
-
-    virtual bool sanity(serializable* ser) = 0;
-};
-
-template <class T>
-class serializable_builder_impl : public serializable_builder
-{
-protected:
-    static const char*    name_;
-    static const uint32_t cls_id_;
-
-public:
-    serializable* build() const override { return T::construct_deserialize_stub(); }
-
-    const char* name() const override { return name_; }
-
-    uint32_t cls_id() const override { return cls_id_; }
-
-    static uint32_t static_cls_id() { return cls_id_; }
-
-    static const char* static_name() { return name_; }
-
-    bool sanity(serializable* ser) override { return (typeid(T) == typeid(*ser)); }
-};
-
-class serializable_factory
-{
-protected:
-    typedef std::unordered_map<long, serializable_builder*> builder_map;
-    static builder_map*                                     builders_;
-
-public:
-    static serializable* get_serializable(uint32_t cls_id);
-
-    /**
-       @return The cls id for the given builder
-    */
-    static uint32_t
-    // add_builder(serializable_builder* builder, uint32_t cls_id);
-    add_builder(serializable_builder* builder, const char* name);
-
-    static bool sanity(serializable* ser, uint32_t cls_id) { return (*builders_)[cls_id]->sanity(ser); }
-
-    static void delete_statics();
-};
-
-template <class T>
-const char* serializable_builder_impl<T>::name_ = typeid(T).name();
-template <class T>
-const uint32_t serializable_builder_impl<T>::cls_id_
-    = serializable_factory::add_builder(new serializable_builder_impl<T>, typeid(T).name());
 
 // Hold off on trivially_serializable for now, as it's not really safe
 // in the case of inheritance

@@ -15,6 +15,7 @@
 #include "sst/core/params.h"
 
 #include "sst/core/unitAlgebra.h"
+#include "sst/core/serialization/serializable.h"
 
 #include <map>
 #include <string>

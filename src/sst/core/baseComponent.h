@@ -12,7 +12,7 @@
 #ifndef SST_CORE_BASECOMPONENT_H
 #define SST_CORE_BASECOMPONENT_H
 
-#include "sst/core/clock.h"
+//#include "sst/core/clock.h"
 #include "sst/core/componentInfo.h"
 #include "sst/core/eli/elementinfo.h"
 #include "sst/core/event.h"
@@ -33,6 +33,7 @@ namespace SST {
 class Component;
 class ComponentExtension;
 class Clock;
+class ClockHandlerBase;
 class Link;
 class LinkMap;
 class Module;
@@ -213,7 +214,7 @@ protected:
         time base for all of the links connected to this component
         @return the TimeConverter object representing the clock frequency
     */
-    TimeConverter* registerClock(const std::string& freq, Clock::HandlerBase* handler, bool regAll = true);
+    TimeConverter* registerClock(const std::string& freq, ClockHandlerBase* handler, bool regAll = true);
 
     /** Registers a clock for this component.
         @param freq Frequency for the clock as a UnitAlgebra object
@@ -223,7 +224,7 @@ protected:
         time base for all of the links connected to this component
         @return the TimeConverter object representing the clock frequency
     */
-    TimeConverter* registerClock(const UnitAlgebra& freq, Clock::HandlerBase* handler, bool regAll = true);
+    TimeConverter* registerClock(const UnitAlgebra& freq, ClockHandlerBase* handler, bool regAll = true);
 
     /** Registers a clock for this component.
         @param tc TimeConverter object specifying the clock frequency
@@ -233,15 +234,15 @@ protected:
         time base for all of the links connected to this component
         @return the TimeConverter object representing the clock frequency
     */
-    TimeConverter* registerClock(TimeConverter* tc, Clock::HandlerBase* handler, bool regAll = true);
+    TimeConverter* registerClock(TimeConverter* tc, ClockHandlerBase* handler, bool regAll = true);
 
     /** Removes a clock handler from the component */
-    void unregisterClock(TimeConverter* tc, Clock::HandlerBase* handler);
+    void unregisterClock(TimeConverter* tc, ClockHandlerBase* handler);
 
     /** Reactivates an existing Clock and Handler
      * @return time of next time clock handler will fire
      */
-    Cycle_t reregisterClock(TimeConverter* freq, Clock::HandlerBase* handler);
+    Cycle_t reregisterClock(TimeConverter* freq, ClockHandlerBase* handler);
     /** Returns the next Cycle that the TimeConverter would fire */
     Cycle_t getNextClockCycle(TimeConverter* freq);
 

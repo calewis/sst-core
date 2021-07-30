@@ -14,7 +14,9 @@
 #ifndef SST_CORE_RANKINFO_H
 #define SST_CORE_RANKINFO_H
 
-#include "sst/core/serialization/serializable.h"
+#include "sst/core/serialization/serializable_fwd.h"
+
+#include <string>
 
 namespace SST {
 
@@ -64,14 +66,22 @@ public:
         return rank >= other.rank;
     }
 
-    void serialize_order(SST::Core::Serialization::serializer& ser) override
+    void serialize_order(SST::Core::Serialization::serializer& ser) override;
+// private:
+//  ImplementSerializable(SST::RankInfo)
+
+public:                                                     
+    virtual const char* cls_name() const override { return "RankInfo"; }
+    virtual uint32_t    cls_id() const override
     {
-        ser& rank;
-        ser& thread;
+        return SST::Core::Serialization::serializable_builder_impl<RankInfo>::static_cls_id();
     }
+    static RankInfo*         construct_deserialize_stub() { return new RankInfo; }
+    virtual std::string serialization_name() const override { return "RankInfo"; }
 
 private:
-    ImplementSerializable(SST::RankInfo)
+    friend class SST::Core::Serialization::serializable_builder_impl<RankInfo>;
+    static bool you_forgot_to_add_ImplementSerializable_to_this_class() { return false; }
 };
 
 } // namespace SST

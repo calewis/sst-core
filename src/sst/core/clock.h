@@ -23,6 +23,14 @@ namespace SST {
 
 class TimeConverter;
 
+class ClockHandlerBase
+{
+public:
+    /** Function called when Handler is invoked */
+    virtual bool operator()(Cycle_t) = 0;
+    virtual ~ClockHandlerBase() {}
+};
+
 /**
  * A Clock class.
  *
@@ -35,14 +43,7 @@ public:
     Clock(TimeConverter* period, int priority = CLOCKPRIORITY);
     ~Clock();
 
-    /** Functor classes for Clock handling */
-    class HandlerBase
-    {
-    public:
-        /** Function called when Handler is invoked */
-        virtual bool operator()(Cycle_t) = 0;
-        virtual ~HandlerBase() {}
-    };
+    using HandlerBase = ClockHandlerBase;
 
     /** Event Handler class with user-data argument
      * @tparam classT Type of the Object

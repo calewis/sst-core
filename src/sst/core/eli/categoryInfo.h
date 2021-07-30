@@ -15,7 +15,8 @@
 #include "sst/core/eli/elibase.h"
 #include "sst/core/warnmacros.h"
 
-#include <iostream>
+// #include <iostream>
+#include <iosfwd>
 #include <string>
 #include <vector>
 
@@ -43,7 +44,7 @@ public:
         }
     }
 
-    void toString(std::ostream& UNUSED(os)) const { os << "      CATEGORY: " << categoryName(cat_) << "\n"; }
+    void toString(std::ostream& UNUSED(os)) const;
 
     template <class XMLNode>
     void outputXML(XMLNode* UNUSED(node))

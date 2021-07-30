@@ -14,7 +14,7 @@
 
 #include "sst/core/mempool.h"
 #include "sst/core/output.h"
-#include "sst/core/serialization/serializable.h"
+#include "sst/core/serialization/serializable_fwd.h"
 #include "sst/core/sst_types.h"
 #include "sst/core/warnmacros.h"
 
@@ -359,15 +359,7 @@ protected:
     // Function used by derived classes to serialize data members.
     // This class is not serializable, because not all class that
     // inherit from it need to be serializable.
-    void serialize_order(SST::Core::Serialization::serializer& ser) override
-    {
-        ser& queue_order;
-        ser& delivery_time;
-        ser& priority;
-#ifdef SST_ENFORCE_EVENT_ORDERING
-        ser& enforce_link_order;
-#endif
-    }
+    void serialize_order(SST::Core::Serialization::serializer& ser) override;
 
 #ifdef SST_ENFORCE_EVENT_ORDERING
     int32_t enforce_link_order;

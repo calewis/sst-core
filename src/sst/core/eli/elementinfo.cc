@@ -13,6 +13,8 @@
 
 #include "sst/core/eli/elementinfo.h"
 
+#include <sstream>
+
 namespace SST {
 
 /**************************************************************************
