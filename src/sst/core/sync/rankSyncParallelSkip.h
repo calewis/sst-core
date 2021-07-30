@@ -12,6 +12,7 @@
 #ifndef SST_CORE_SYNC_RANKSYNCPARALLELSKIP_H
 #define SST_CORE_SYNC_RANKSYNCPARALLELSKIP_H
 
+#include "sst/core/queue.h"
 #include "sst/core/sst_types.h"
 #include "sst/core/sync/syncManager.h"
 #include "sst/core/threadsafe.h"

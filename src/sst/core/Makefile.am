@@ -56,6 +56,7 @@ nobase_dist_sst_HEADERS = \
 	params.h \
 	pollingLinkQueue.h \
 	profile.h \
+	queue.h \
 	rankInfo.h \
 	simulation.h \
 	sparseVectorMap.h \
@@ -190,9 +191,11 @@ sst_core_sources = \
 	timeLord.cc \
 	uninitializedQueue.cc \
 	unitAlgebra.cc \
+	mempool.cc \
 	module.cc \
 	sstpart.cc \
 	timeVortex.cc \
+	threadsafe.cc \
 	serialization/serializable.cc \
 	serialization/serialize_serializable.cc \
 	serialization/serializer.cc \

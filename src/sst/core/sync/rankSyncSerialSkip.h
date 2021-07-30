@@ -15,6 +15,7 @@
 #include "sst/core/sst_types.h"
 #include "sst/core/sync/syncManager.h"
 #include "sst/core/threadsafe.h"
+#include "sst/core/queue.h"
 
 #include <map>
 

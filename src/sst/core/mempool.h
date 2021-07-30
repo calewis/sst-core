@@ -19,8 +19,8 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
-#include <deque>
 #include <list>
+#include <vector>
 #include <sys/mman.h>
 
 namespace SST {
@@ -31,28 +31,14 @@ namespace Core {
  */
 class MemPool
 {
-    template <typename LOCK_t>
     class FreeList
     {
-        LOCK_t             mtx;
+        ThreadSafe::Spinlock             mtx;
         std::vector<void*> list;
 
     public:
-        inline void insert(void* ptr)
-        {
-            std::lock_guard<LOCK_t> lock(mtx);
-            list.push_back(ptr);
-        }
-
-        inline void* try_remove()
-        {
-            std::lock_guard<LOCK_t> lock(mtx);
-            if ( list.empty() ) return nullptr;
-            void* p = list.back();
-            list.pop_back();
-            return p;
-        }
-
+        void insert(void* ptr);
+        void* try_remove();
         size_t size() const { return list.size(); }
     };
 
@@ -79,18 +65,7 @@ public:
     }
 
     /** Allocate a new element from the memory pool */
-    inline void* malloc()
-    {
-        void* ret = freeList.try_remove();
-        while ( !ret ) {
-            bool ok = allocPool();
-            if ( !ok ) return nullptr;
-            sst_pause();
-            ret = freeList.try_remove();
-        }
-        ++numAlloc;
-        return ret;
-    }
+    void* malloc();
 
     /** Return an element to the memory pool */
     inline void free(void* ptr)
@@ -156,7 +131,7 @@ private:
     size_t arenaSize;
 
     std::atomic<unsigned int>      allocating;
-    FreeList<ThreadSafe::Spinlock> freeList;
+    FreeList freeList;
     std::list<uint8_t*>            arenas;
 };
 
