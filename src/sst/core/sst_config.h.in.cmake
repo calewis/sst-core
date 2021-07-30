@@ -47,7 +47,7 @@
 #cmakedefine HAVE_DLERROR
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
-#cmakedefine HAVE_DLFCN_H
+#cmakedefine HAVE_DLFCN_H 1
 
 /* Define to 1 if you have the <dl.h> header file. */
 #cmakedefine HAVE_DL_H
@@ -131,16 +131,16 @@
 #cmakedefine01 HAVE_SYS_DL_H 
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
-#cmakedefine01 HAVE_SYS_STAT_H
+#cmakedefine HAVE_SYS_STAT_H 1
 
 /* Define to 1 if you have the <sys/time.h> header file. */
 #cmakedefine HAVE_SYS_TIME_H
 
 /* Define to 1 if you have the <sys/types.h> header file. */
-#cmakedefine HAVE_SYS_TYPES_H
+#cmakedefine HAVE_SYS_TYPES_H 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
-#cmakedefine HAVE_UNISTD_H
+#cmakedefine HAVE_UNISTD_H 1
 
 /* This value is set to 1 to indicate that the system argz facility works */
 #cmakedefine HAVE_WORKING_ARGZ
@@ -287,7 +287,7 @@
 #cmakedefine __SST_ENABLE_PROFILE__
 
 /* Defines that standard PRI macros should be enabled */
-#cmakedefine __STDC_FORMAT_MACROS
+#cmakedefine __STDC_FORMAT_MACROS 1
 
 /* Define so that glibc/gnulib argp.h does not typedef error_t. */
 #cmakedefine __error_t_defined

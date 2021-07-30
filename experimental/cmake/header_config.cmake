@@ -17,13 +17,13 @@ if(APPLE)
 endif(APPLE)
 
 execute_process(
-         COMMAND git rev-parse HEAD
+         COMMAND git --git-dir=${CMAKE_SOURCE_DIR}/../.git rev-parse HEAD
          RESULT_VARIABLE HASH_RESULT
          OUTPUT_VARIABLE SSTCORE_GIT_HEADSHA
          OUTPUT_STRIP_TRAILING_WHITESPACE
          )
 execute_process(
-  COMMAND git branch --show-current
+  COMMAND git --git-dir=${CMAKE_SOURCE_DIR}/../.git branch --show-current
   RESULT_VARIABLE BRANCH_RESULT
   OUTPUT_VARIABLE SSTCORE_GIT_BRANCH
   OUTPUT_STRIP_TRAILING_WHITESPACE
@@ -63,6 +63,7 @@ if(NOT HAVE_LTDL_EXTERNAL)
   ExternalProject_Add(libltdl
     SOURCE_DIR ${CMAKE_CURRENT_BINARY_DIR}/libltdl
     BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/libltdl
+    BUILD_BYPRODUCTS ${LIBLTDL_INSTALL_DIRS}/lib/libltdl.a
     INSTALL_DIR ${LIBLTDL_INSTALL_DIRS}
     CONFIGURE_COMMAND aclocal && autoconf && automake && ./configure --prefix=${LIBLTDL_INSTALL_DIRS} --quiet --enable-ltdl-install
     BUILD_COMMAND make --quiet

@@ -1,15 +1,7 @@
 configure_file(sst_config.h.in.cmake sst_config.h)
 configure_file(build_info.h.in build_info.h)
 
-#
-# 
-#
-
-#
-# SSTSIM
-#
-add_executable(sstsim 
-  main.cc 
+add_library(sst_core_lib  OBJECT
   action.cc
   clock.cc
   baseComponent.cc
@@ -22,8 +14,6 @@ add_executable(sstsim
   cfgoutput/dotConfigOutput.cc
   cfgoutput/xmlConfigOutput.cc
   cfgoutput/jsonConfigOutput.cc
-  env/envquery.cc
-  env/envconfig.cc
   eli/elibase.cc
   eli/elementinfo.cc
   elemLoader.cc
@@ -115,72 +105,84 @@ add_executable(sstsim
   simulation_impl.h
 )
 
-#add_executable(sstinfo
-# 	bootsstinfo.cc
-# 	bootshared.cc
-# 	bootshared.h
-# 	env/envquery.h
-# 	env/envconfig.h
-# 	env/envquery.cc
-# 	env/envconfig.cc
-#   )
-# 
-# add_executable(sst
-# 	bootsst.cc
-# 	bootshared.cc
-# 	bootshared.h
-# 	env/envquery.h
-# 	env/envconfig.h
-# 	env/envquery.cc
-# 	env/envconfig.cc
-#   )
-# 
-# add_executable(sstconfig
-# 	sstconfigtool.cc
-# 	env/envquery.h
-# 	env/envconfig.h
-# 	env/envquery.cc
-# 	env/envconfig.cc
-#   )
+add_library(sst_env_lib OBJECT 
+	env/envquery.h 
+	env/envconfig.h 
+	env/envquery.cc 
+	env/envconfig.cc
+  )
 
-#
-# SSTSIM
-#
-add_dependencies(sstsim libltdl)
-target_include_directories(sstsim PRIVATE 
+add_library(sst_boot_lib OBJECT 
+ 	bootshared.cc
+ 	bootshared.h
+  )
+
+add_library(sst_tiny_xml  OBJECT
+	tinyxml/tinystr.cpp
+	tinyxml/tinyxml.cpp
+	tinyxml/tinyxmlerror.cpp
+	tinyxml/tinyxmlparser.cpp
+	tinyxml/tinystr.h
+	tinyxml/tinyxml.h
+  )
+
+add_dependencies(sst_core_lib libltdl)
+target_include_directories(sst_core_lib PUBLIC
   ${CMAKE_CURRENT_BINARY_DIR} 
   ${CMAKE_BINARY_DIR}/src
   ${CMAKE_SOURCE_DIR}/../src 
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${LIBLTDL_INCLUCE_DIRS}
   )
-target_compile_definitions(sstsim
-  PRIVATE -DTIXML_USE_STL -DSST_BUILDING_CORE=1
+
+target_include_directories(sst_tiny_xml PUBLIC ${CMAKE_SOURCE_DIR}/../src)
+
+target_include_directories(sst_env_lib PUBLIC 
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_BINARY_DIR}/src
+  ${CMAKE_SOURCE_DIR}/../src 
   )
-#target_link_options(sstsim BEFORE PRIVATE "-export-dynamic")
-target_link_libraries(sstsim 
+
+target_include_directories(sst_boot_lib PUBLIC 
+  ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_SOURCE_DIR}/../src 
+  )
+
+target_compile_definitions(sst_core_lib PUBLIC 
+  __STDC_FORMAT_MACROS 
+  SST_BUILDING_CORE=1)
+target_compile_definitions(sst_tiny_xml PUBLIC TIXML_USE_STL)
+
+target_link_libraries(sst_core_lib
   PUBLIC Python::Python ${LIBLTDL_LIBRARIES} m
   ) 
 
 if(MPI_FOUND)
-  target_link_libraries(sstsim PRIVATE MPI::MPI_C) 
+  target_link_libraries(sst_core_lib PUBLIC MPI::MPI_C) 
 endif(MPI_FOUND)
 
 if(ZLIB_FOUND)
-  target_link_libraries(sstsim PRIVATE ZLIB::ZLIB) 
+  target_link_libraries(sst_core_lib PUBLIC ZLIB::ZLIB) 
 endif(ZLIB_FOUND)
 
-if(ZOLTAN_FOUND)
-  target_sources(sstsim 
-    impl/partitioners/zoltpart.cc 
-    impl/partitioners/zoltpart.h
-    )
-endif(ZOLTAN_FOUND)
-
 if(HDF5_FOUND)
-  target_sources(sstsim statapi/statoutputhdf5.cc)
-  target_link_libraries(sstsim PRIVATE HDF5::HDF5) 
+  target_sources(sst_core_lib statapi/statoutputhdf5.cc)
+  target_link_libraries(sst_core_lib PUBLIC HDF5::HDF5) 
 endif(HDF5_FOUND)
+
+add_executable(sstsim main.cc)
+add_executable(sst_info bootsstinfo.cc)
+add_executable(sstinfo.x sstinfo.cc)
+add_executable(sst bootsst.cc)
+add_executable(sstconfig sstconfigtool.cc)
+add_executable(sst_register sstregistertool.cc)
+
+target_link_libraries(sstsim PRIVATE sst_core_lib sst_env_lib)
+target_link_libraries(sstinfo.x PRIVATE sst_core_lib sst_tiny_xml sst_env_lib)
+target_link_libraries(sst_info PRIVATE sst_env_lib sst_boot_lib)
+target_link_libraries(sst PRIVATE sst_boot_lib sst_env_lib)
+target_link_libraries(sstconfig PRIVATE sst_env_lib)
+target_link_libraries(sst_register PRIVATE sst_env_lib)
 
 
 
