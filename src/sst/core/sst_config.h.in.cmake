@@ -1,140 +1,140 @@
 /* src/sst/core/sst_config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* Define to 1 if you have the `argz_add' function. */
-#cmakedefine HAVE_ARGZ_ADD
+#cmakedefine HAVE_ARGZ_ADD 1
 
 /* Define to 1 if you have the `argz_append' function. */
-#cmakedefine HAVE_ARGZ_APPEND
+#cmakedefine HAVE_ARGZ_APPEND 1
 
 /* Define to 1 if you have the `argz_count' function. */
-#cmakedefine HAVE_ARGZ_COUNT
+#cmakedefine HAVE_ARGZ_COUNT 1
 
 /* Define to 1 if you have the `argz_create_sep' function. */
-#cmakedefine HAVE_ARGZ_CREATE_SEP
+#cmakedefine HAVE_ARGZ_CREATE_SEP 1
 
 /* Define to 1 if you have the <argz.h> header file. */
-#cmakedefine HAVE_ARGZ_H
+#cmakedefine HAVE_ARGZ_H 1
 
 /* Define to 1 if you have the `argz_insert' function. */
-#cmakedefine HAVE_ARGZ_INSERT
+#cmakedefine HAVE_ARGZ_INSERT 1
 
 /* Define to 1 if you have the `argz_next' function. */
-#cmakedefine HAVE_ARGZ_NEXT
+#cmakedefine HAVE_ARGZ_NEXT 1
 
 /* Define to 1 if you have the `argz_stringify' function. */
-#cmakedefine HAVE_ARGZ_STRINGIFY
+#cmakedefine HAVE_ARGZ_STRINGIFY 1
 
 /* Define to 1 if you have the `closedir' function. */
-#cmakedefine HAVE_CLOSEDIR
+#cmakedefine HAVE_CLOSEDIR 1
 
 /* Define to 1 if you have the <c_asm.h> header file. */
-#cmakedefine HAVE_C_ASM_H
+#cmakedefine HAVE_C_ASM_H 1
 
 /* Define to 1 if you have the declaration of `cygwin_conv_path', and to 0 if
    you don't. */
-#cmakedefine HAVE_DECL_CYGWIN_CONV_PATH
+#cmakedefine HAVE_DECL_CYGWIN_CONV_PATH 1
 
 /* Define to 1 if you have the <dirent.h> header file. */
-#cmakedefine HAVE_DIRENT_H
+#cmakedefine HAVE_DIRENT_H 1
 
 /* Define if you have the GNU dld library. */
-#cmakedefine HAVE_DLD
+#cmakedefine HAVE_DLD 1
 
 /* Define to 1 if you have the <dld.h> header file. */
-#cmakedefine HAVE_DLD_H
+#cmakedefine HAVE_DLD_H 1
 
 /* Define to 1 if you have the `dlerror' function. */
-#cmakedefine HAVE_DLERROR
+#cmakedefine HAVE_DLERROR 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #cmakedefine HAVE_DLFCN_H 1
 
 /* Define to 1 if you have the <dl.h> header file. */
-#cmakedefine HAVE_DL_H
+#cmakedefine HAVE_DL_H 1
 
 /* Define if you have the _dyld_func_lookup function. */
-#cmakedefine HAVE_DYLD
+#cmakedefine HAVE_DYLD 1
 
 /* Define to 1 if the system has the type `error_t'. */
-#cmakedefine HAVE_ERROR_T
+#cmakedefine HAVE_ERROR_T 1
 
 /* Defines whether we have the hdf5 library */
 #cmakedefine HAVE_HDF5
 
 /* Define to 1 if you have the <intrinsics.h> header file. */
-#cmakedefine HAVE_INTRINSICS_H
+#cmakedefine HAVE_INTRINSICS_H 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-#cmakedefine HAVE_INTTYPES_H
+#cmakedefine HAVE_INTTYPES_H 1
 
 /* Define if you have the libdl library or equivalent. */
-#cmakedefine HAVE_LIBDL
+#cmakedefine HAVE_LIBDL 1
 
 /* Define if libdlloader will be built on this platform */
-#cmakedefine HAVE_LIBDLLOADER
+/* APPEARS TO BE UNUSED #define HAVE_LIBDLLOADER */
 
 /* Define to 1 if you have the `ltdl' library (-lltdl). */
-#cmakedefine HAVE_LIBLTDL
+/* APPEARS TO BE UNUSED #define HAVE_LIBLTDL */
 
 /* Defines whether we have the libz library */
 #cmakedefine HAVE_LIBZ
 
 /* Define this if a modern libltdl is already installed */
-#cmakedefine HAVE_LTDL
+/* APPEARS TO BE UNUSED #define HAVE_LTDL */
 
 /* Define to 1 if you have the <mach/mach_time.h> header file. */
-#cmakedefine HAVE_MACH_MACH_TIME_H
+#cmakedefine HAVE_MACH_MACH_TIME_H 1
 
 /* Define to 1 if you have the <mach-o/dyld.h> header file. */
-#cmakedefine HAVE_MACH_O_DYLD_H
+#cmakedefine HAVE_MACH_O_DYLD_H 1
 
 /* Define to 1 if you have the `opendir' function. */
-#cmakedefine HAVE_OPENDIR
+#cmakedefine HAVE_OPENDIR 1
 
 /* Define if libtool can extract symbol lists from object files. */
-#cmakedefine HAVE_PRELOADED_SYMBOLS
+/* TODO FIGURE OUT IF THIS MATTERS #cmakedefine HAVE_PRELOADED_SYMBOLS */
 
 /* Define to 1 if you have the <Python.h> header file. */
 #cmakedefine HAVE_PYTHON_H 1
 
 /* Define to 1 if you have the `readdir' function. */
-#cmakedefine HAVE_READDIR
+#cmakedefine HAVE_READDIR 1
 
 /* Define if you have the shl_load function. */
-#cmakedefine HAVE_SHL_LOAD
+/* TODO FIGURE OUT #cmakedefine HAVE_SHL_LOAD */
 
 /* Define if C++ supports C++14 features. */
 #cmakedefine HAVE_STDCXX_1Y
 
 /* Define to 1 if you have the <stdint.h> header file. */
-#cmakedefine HAVE_STDINT_H
+#cmakedefine HAVE_STDINT_H 1
 
 /* Define to 1 if you have the <stdio.h> header file. */
-#cmakedefine HAVE_STDIO_H
+#cmakedefine HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
-#cmakedefine HAVE_STDLIB_H
+#cmakedefine HAVE_STDLIB_H 1
 
 /* Define to 1 if you have the <strings.h> header file. */
-#cmakedefine HAVE_STRINGS_H
+#cmakedefine HAVE_STRINGS_H 1
 
 /* Define to 1 if you have the <string.h> header file. */
-#cmakedefine HAVE_STRING_H
+#cmakedefine HAVE_STRING_H 1
 
 /* Define to 1 if you have the `strlcat' function. */
-#cmakedefine HAVE_STRLCAT
+#cmakedefine HAVE_STRLCAT 1
 
 /* Define to 1 if you have the `strlcpy' function. */
-#cmakedefine HAVE_STRLCPY
+#cmakedefine HAVE_STRLCPY 1
 
 /* Define to 1 if you have the <sys/dl.h> header file. */
-#cmakedefine01 HAVE_SYS_DL_H 
+#cmakedefine01 HAVE_SYS_DL_H 1
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #cmakedefine HAVE_SYS_STAT_H 1
 
 /* Define to 1 if you have the <sys/time.h> header file. */
-#cmakedefine HAVE_SYS_TIME_H
+#cmakedefine HAVE_SYS_TIME_H 1
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 #cmakedefine HAVE_SYS_TYPES_H 1
@@ -143,13 +143,7 @@
 #cmakedefine HAVE_UNISTD_H 1
 
 /* This value is set to 1 to indicate that the system argz facility works */
-#cmakedefine HAVE_WORKING_ARGZ
-
-/* Define if you have the Zoltan library. */
-#cmakedefine HAVE_ZOLTAN
-
-/* Define to 1 if you have the <zoltan.h> header file. */
-#cmakedefine HAVE_ZOLTAN_H
+#cmakedefine HAVE_WORKING_ARGZ 1
 
 /* Define if the OS needs help to load dependent libraries for dlopen(). */
 #cmakedefine LTDL_DLOPEN_DEPLIBS
@@ -183,10 +177,10 @@
 #cmakedefine NEED_USCORE
 
 /* Define to the address where bug reports for this package should be sent. */
-#cmakedefine PACKAGE_BUGREPORT
+#cmakedefine PACKAGE_BUGREPORT "@PACKAGE_BUGREPORT@"
 
 /* Define to the full name of this package. */
-#cmakedefine PACKAGE_NAME
+#cmakedefine PACKAGE_NAME "@PACKAGE_NAME@"
 
 /* Define to the full name and version of this package. */
 #cmakedefine PACKAGE_STRING
@@ -195,7 +189,7 @@
 #cmakedefine PACKAGE_TARNAME
 
 /* Define to the home page for this package. */
-#cmakedefine PACKAGE_URL
+#cmakedefine PACKAGE_URL "@PACKAGE_URL@"
 
 /* Define to the version of this package. */
 #cmakedefine PACKAGE_VERSION "@PACKAGE_VERSION@"
@@ -210,10 +204,10 @@
 #cmakedefine SSTCORE_GIT_HEADSHA "@SSTCORE_GIT_HEADSHA@"
 
 /* Defines the C compiler used to build SST */
-#cmakedefine SST_CC
+#cmakedefine SST_CC "@SST_CC@"
 
 /* Defines the CFLAGS used to build SST */
-#cmakedefine SST_CFLAGS
+#cmakedefine SST_CFLAGS "@SST_CFLAGS@"
 
 /* Defines compile for Mac OS-X */
 #cmakedefine SST_COMPILE_MACOSX 1
@@ -222,49 +216,49 @@
 #cmakedefine SST_CONFIG_HAVE_MPI
 
 /* Set to 1 if Python was found */
-#cmakedefine SST_CONFIG_HAVE_PYTHON
+#cmakedefine SST_CONFIG_HAVE_PYTHON 1
 
 /* Set to 1 if Python version is 3 */
-#cmakedefine SST_CONFIG_HAVE_PYTHON3
+#cmakedefine SST_CONFIG_HAVE_PYTHON3 1
 
 /* Defines the C preprocessor used to build SST */
-#cmakedefine SST_CPP
+#cmakedefine SST_CPP "@SST_CPP@"
 
 /* Defines the CPPFLAGS used to build SST */
-#cmakedefine SST_CPPFLAGS
+#cmakedefine SST_CPPFLAGS "@SST_CPPFLAGS@"
 
 /* Defines the C++ compiler used to build SST */
-#cmakedefine SST_CXX
+#cmakedefine SST_CXX "@SST_CXX@"
 
 /* Defines the C++ preprocessor used to build SST */
-#cmakedefine SST_CXXCPP
+#cmakedefine SST_CXXCPP "@SST_CXXCPP@"
 
 /* Defines the CXXFLAGS used to build SST */
-#cmakedefine SST_CXXFLAGS
+#cmakedefine SST_CXXFLAGS "@SST_CXXFLAGS@"
 
-/* Whether to enable preview build */
+/* TODO FIGURE OUT WHAT THIS IS Whether to enable preview build */
 #cmakedefine SST_ENABLE_PREVIEW_BUILD
 
 /* Defines the location SST will be installed in */
 #cmakedefine SST_INSTALL_PREFIX "@SST_INSTALL_PREFIX@"
 
 /* Defines the linker used to build SST */
-#cmakedefine SST_LD
+#cmakedefine SST_LD "@SST_LD@"
 
 /* Defines the LDFLAGS used to build SST */
-#cmakedefine SST_LDFLAGS
+#cmakedefine SST_LDFLAGS "@SST_LDFLAGS@"
 
 /* Defines the MPI C compiler used to build SST */
-#cmakedefine SST_MPICC
+#cmakedefine SST_MPICC "@SST_MPICC@"
 
 /* Defines the MPI C++ compilers used to build SST */
-#cmakedefine SST_MPICXX
+#cmakedefine SST_MPICXX "@SST_MPICXX@"
 
 /* Defines the CPPFLAGS needed to compile Python into SST */
-#cmakedefine SST_PYTHON_CPPFLAGS
+#cmakedefine SST_PYTHON_CPPFLAGS "@SST_PYTHON_CPPFLAGS@"
 
 /* Defines the LDFLAGS needed to compile Python into SST */
-#cmakedefine SST_PYTHON_LDFLAGS
+#cmakedefine SST_PYTHON_LDFLAGS "@SST_PYTHON_LDFLAGS@"
 
 /* Test Frameworks will be sym-linked instead of copied on install */
 #cmakedefine SST_TESTFRAMEWORK_DEV
@@ -275,7 +269,7 @@
 #cmakedefine STDC_HEADERS
 
 /* Set to 1 to use memory pools in the SST core */
-#cmakedefine USE_MEMPOOL
+#cmakedefine USE_MEMPOOL 1
 
 /* Tracks extra information about events and activities. */
 #cmakedefine __SST_DEBUG_EVENT_TRACKING__
