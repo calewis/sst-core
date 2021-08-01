@@ -20,7 +20,7 @@
 
 // This must be defined before inclusion of intttypes.h
 #ifndef __STDC_FORMAT_MACROS
-#define __STDC_FORMAT_MACROS
+#define __STDC_FORMAT_MACROS 1
 #endif
 #include "sst/core/rankInfo.h"
 

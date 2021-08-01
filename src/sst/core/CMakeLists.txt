@@ -1,6 +1,9 @@
 configure_file(sst_config.h.in.cmake ${CMAKE_CURRENT_BINARY_DIR}/sst_config.h)
 configure_file(build_info.h.in ${CMAKE_CURRENT_BINARY_DIR}/build_info.h)
 
+add_subdirectory(testingframework)
+add_subdirectory(testElements)
+
 add_library(
   sst_core_lib OBJECT
   action.cc
@@ -108,11 +111,11 @@ target_include_directories(
 target_include_directories(sst_boot_lib PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
                                                ${CMAKE_SOURCE_DIR}/../src)
 
-target_compile_definitions(
-  sst_core_lib PUBLIC __STDC_FORMAT_MACROS SST_BUILDING_CORE=1)
+target_compile_definitions(sst_core_lib PUBLIC __STDC_FORMAT_MACROS
+                                               SST_BUILDING_CORE=1)
 
 if(SST_USE_MEMPOOL)
-target_compile_definitions(sst_core_lib PUBLIC USE_MEMPOOL=1)
+  target_compile_definitions(sst_core_lib PUBLIC USE_MEMPOOL=1)
 endif(SST_USE_MEMPOOL)
 
 target_compile_definitions(sst_tiny_xml PUBLIC TIXML_USE_STL)
@@ -160,3 +163,12 @@ install(TARGETS sst-info)
 install(TARGETS sstinfo.x DESTINATION libexec)
 install(TARGETS sst-register)
 install(TARGETS sst-config)
+
+# We may need to filter this list if it over installs.
+install(
+  DIRECTORY "${CMAKE_SOURCE_DIR}/../src/"
+  DESTINATION "include"
+  FILES_MATCHING
+  PATTERN "*.h")
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/sst_config.h
+        DESTINATION include/sst/core/)

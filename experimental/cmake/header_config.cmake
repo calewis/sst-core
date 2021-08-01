@@ -86,27 +86,26 @@ if(MPI_FOUND)
   set(SST_MPICXX ${MPI_CXX_COMPILER})
 endif(MPI_FOUND)
 
-find_program(PYCONFIG NAMES python-config "${Python_EXECUTABLE}-config")
-if(PYCONFIG)
-  message(STATUS "Found PYCONFIG ${PYCONFIG}.")
-
-  execute_process(
-    COMMAND ${PYCONFIG} --ldflags
-    RESULT_VARIABLE PYCONFIG_RESULT
-    OUTPUT_VARIABLE SST_PYTHON_LDFLAGS
-    OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-  if(PYCONFIG_RESULT AND NOT PYCONFIG_RESULT EQUAL 0)
-    message(
-      FATAL_ERROR
-        "python-config (${PYCONFIG}) --ldflags failed with ${PYCONFIG_RESULT}")
-  endif(PYCONFIG_RESULT AND NOT PYCONFIG_RESULT EQUAL 0)
-else(PYCONFIG)
-  message(FATAL_ERROR "Failed to find python-config")
-endif(PYCONFIG)
+# find_program(PYCONFIG NAMES python-config "${Python_EXECUTABLE}-config")
+# if(PYCONFIG) message(STATUS "Found PYCONFIG ${PYCONFIG}.")
+#
+# #execute_process( #  COMMAND ${PYCONFIG} --ldflags #  RESULT_VARIABLE
+# PYCONFIG_RESULT #  OUTPUT_VARIABLE SST_PYTHON_LDFLAGS #
+# OUTPUT_STRIP_TRAILING_WHITESPACE)
+#
+# #if(PYCONFIG_RESULT AND NOT PYCONFIG_RESULT EQUAL 0) #  message( # FATAL_ERROR
+# #      "python-config (${PYCONFIG}) --ldflags failed with ${PYCONFIG_RESULT}")
+# #endif(PYCONFIG_RESULT AND NOT PYCONFIG_RESULT EQUAL 0) set(SST_PTYHON_LDFLAGS
+# ${Python_LIBRARIES})
+#
+# execute_process( COMMAND ${PYCONFIG} --cppflags RESULT_VARIABLE
+# PYCONFIG_RESULT OUTPUT_VARIABLE SST_PYTHON_CPPFLAGS
+# OUTPUT_STRIP_TRAILING_WHITESPACE) else(PYCONFIG) message(FATAL_ERROR "Failed
+# to find python-config") endif(PYCONFIG)
 
 if(Python_FOUND)
-  set(SST_PYTHON_CPPFLAGS ${Python_INCLUDE_DIRS})
+  set(SST_PTYHON_LDFLAGS "${Python_LIBRARIES}")
+  set(SST_PYTHON_CPPFLAGS "-I${Python_INCLUDE_DIRS}")
 endif(Python_FOUND)
 set(__STDC_FORMAT_MACROS ON)
 
@@ -129,13 +128,15 @@ if(APPLE)
   set(SST_COMPILE_MACOSX ON)
 endif(APPLE)
 
+find_package(Git REQUIRED)
 execute_process(
-  COMMAND git --git-dir=${CMAKE_SOURCE_DIR}/../.git rev-parse HEAD
+  COMMAND ${GIT_EXECUTABLE} --git-dir=${CMAKE_SOURCE_DIR}/../.git rev-parse HEAD
   RESULT_VARIABLE HASH_RESULT
   OUTPUT_VARIABLE SSTCORE_GIT_HEADSHA
   OUTPUT_STRIP_TRAILING_WHITESPACE)
 execute_process(
-  COMMAND git --git-dir=${CMAKE_SOURCE_DIR}/../.git branch --show-current
+  COMMAND ${GIT_EXECUTABLE} --git-dir=${CMAKE_SOURCE_DIR}/../.git branch
+          --show-current
   RESULT_VARIABLE BRANCH_RESULT
   OUTPUT_VARIABLE SSTCORE_GIT_BRANCH
   OUTPUT_STRIP_TRAILING_WHITESPACE)
