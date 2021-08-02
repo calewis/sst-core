@@ -1,0 +1,20 @@
+FROM d4ff818577bc
+
+# bash is needed to actually run configure
+RUN apk add --no-cache \
+  openmpi \
+  openmpi-dev \
+  python3 \
+  python3-dev \
+  gcc \
+  g++ \
+  zlib \
+  zlib-dev \
+  bash \
+  git \
+  autoconf \
+  make \
+  libtool \
+  automake
+
+
