@@ -1,20 +1,46 @@
-FROM d4ff818577bc
+FROM ubuntu:20.04 as builder
 
-# bash is needed to actually run configure
-RUN apk add --no-cache \
-  openmpi \
-  openmpi-dev \
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/London
+RUN apt-get update && apt install -y\
+  openmpi-bin \
+  openmpi-common \
+  libtool \
+  libtool-bin \
+  zlib1g \
+  zlib1g-dev \
+  libhdf5-dev \
+  autoconf \
   python3 \
   python3-dev \
-  gcc \
-  g++ \
-  zlib \
-  zlib-dev \
-  bash \
+  automake \
+  build-essential \
   git \
-  autoconf \
-  make \
-  libtool \
-  automake
+  && rm -rf /var/lib/apt/lists/*
 
+RUN git clone --single-branch --branch devel https://github.com/sstsimulator/sst-core.git \
+  && cd sst-core \
+  && ./autogen.sh \
+  && cd / \
+  && mkdir -p build \
+  && cd build \
+  && ../sst-core/configure --prefix=/install/sst-core CXXFLAGS="-Os" \
+  && make install \
+  && cd / \
+  && rm -rf build
 
+from ubuntu:20.04 
+
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/London
+RUN apt-get update && apt install -y\
+  openmpi-bin \
+  zlib1g \
+  python3 \
+  python3-dev \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY --from=builder /install/sst-core /install/sst-core
+COPY --from=builder /sst-core/tests /tests
+
+RUN /install/sst-core/bin/sst-test-core -p  /tests
