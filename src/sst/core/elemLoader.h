@@ -37,15 +37,14 @@ public:
     /**
      * Search paths for potential elements and add them to the provided vector
      *
-     * @param potElems - vector of potential elements that could contain elements
-     * @return void
+     * @return vector of potential elements that could contain elements
      */
-    void getPotentialElements(std::vector<std::string>& potElems);
+    std::vector<std::string> getPotentialElements();
 
 private:
-    std::string searchPaths;
-    bool        verbose;
-    int         bindPolicy;
+    std::vector<std::string> searchPaths;
+    bool                     verbose = false;
+    int                      bindPolicy;
 };
 
 } // namespace SST
