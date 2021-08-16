@@ -36,9 +36,14 @@
 #endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
+
+
+
+
 #endif
 
-namespace SST {
+namespace 
+SST {
 
 static std::vector<std::string>
 splitPath(const std::string& searchPaths)
@@ -56,20 +61,14 @@ splitPath(const std::string& searchPaths)
     return paths;
 }
 
-ElemLoader::ElemLoader(const std::string& searchPaths) :
-    searchPaths(searchPaths),
-    verbose(false),
-    bindPolicy(RTLD_LAZY | RTLD_GLOBAL)
-{
+ElemLoader::ElemLoader(const std::string& searchPaths) : searchPaths(searchPaths), verbose(false), bindPolicy(RTLD_LAZY | RTLD_GLOBAL) {
 
-    const char* verbose_env = getenv("SST_CORE_DL_VERBOSE");
-    if ( nullptr != verbose_env ) { verbose = atoi(verbose_env) > 0; }
+const char* verbose_env = getenv("SST_CORE_DL_VERBOSE"); if ( nullptr != verbose_env ) { verbose = atoi(verbose_env) > 0; }
 
     const char* bind_env = getenv("SST_CORE_DL_BIND_POLICY");
-    if ( (nullptr != bind_env) && ((!strcmp(bind_env, "now")) || (!strcmp(bind_env, "NOW"))) ) {
-        bindPolicy = RTLD_NOW | RTLD_GLOBAL;
-    }
-}
+    if ( (nullptr != bind_env) && ((!strcmp(bind_env, "now"))     || (!strcmp(bind_env, "NOW"))) ) {
+bindPolicy = RTLD_NOW | RTLD_GLOBAL;
+    } }
 
 ElemLoader::~ElemLoader() {}
 
