@@ -66,10 +66,7 @@ ElemLoader::ElemLoader(const std::string& searchPaths) :
     if ( nullptr != verbose_env ) { verbose = atoi(verbose_env) > 0; }
 
     const char* bind_env = getenv("SST_CORE_DL_BIND_POLICY");
-    if ( (nullptr != bind_env) && ((!strcmp(bind_env, "now")) || (!strcmp(bind_env, "NOW"))) ) {
-        bindPolicy = RTLD_NOW | RTLD_GLOBAL;
-    }
-}
+    if ( (nullptr != bind_env) && ((!strcmp(bind_env, "now")) || (!strcmp(bind_env, "NOW"))) ) { bindPolicy = RTLD_NOW | RTLD_GLOBAL; } }
 
 ElemLoader::~ElemLoader() {}
 
@@ -84,12 +81,9 @@ ElemLoader::loadLibrary(const std::string& elemlib, std::ostream& err_os)
     for ( std::string const& next_path : paths ) {
         if ( verbose ) { printf("SST-DL: Searching: %s\n", next_path.c_str()); }
 
-        if ( next_path.back() == '/' ) { sprintf(full_path, "%slib%s.so", next_path.c_str(), elemlib.c_str()); }
-        else {
-            sprintf(full_path, "%s/lib%s.so", next_path.c_str(), elemlib.c_str());
-        }
+        if ( next_path.back() == '/' ) { sprintf(full_path, "%slib%s.so", next_path.c_str(), elemlib.c_str()); } else { sprintf(full_path, "%s/lib%s.so", next_path.c_str(), elemlib.c_str()); }
 
-        if ( verbose ) { printf("SST-DL: Attempting to load %s\n", full_path); }
+if ( verbose ) { printf("SST-DL: Attempting to load %s\n", full_path); }
 
         // use a global bind policy read from environment, default to RTLD_LAZY
         void* handle = dlopen(full_path, bindPolicy);
