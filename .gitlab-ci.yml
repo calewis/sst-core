@@ -1,8 +1,8 @@
 test-job1:
-  image: centos:7
+  image: ${container_registry}/sst-core-env-centos7
   stage: test
   script:
-    - yum -y update && yum install -y gcc gcc-c++ python3 python3-devel make automake git libtool libtool-ltdl-devel openmpi openmpi-devel zlib-devel wget
-    - mkdir -p build && ./autogen.sh && cd build 
-    - ../configure --prefix=$PWD/../install --disable-mpi && make -j $(nproc) install
-    - ../install/bin/sst-test-core
+    - cmake -B /build sst-core/experimental -DSST_DISABLE_MPI=ON -DCMAKE_INSTALL_PREFIX=/install
+    - cmake --build /build -j $(nproc)
+    - cmake --install /build -v
+    - /install/bin/sst-test/core
