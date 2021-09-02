@@ -2,4 +2,4 @@ test-job1:
   image: centos:7
   stage: test
   script:
-    - yum upgrade && yum install -y wget
+    - http_proxy=$SYSTEM_PROXY https_proxy=$SYSTEM_PROXY yum upgrade && yum install -y wget
