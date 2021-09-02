@@ -1,5 +1,5 @@
 test-job1:
-  image: ${container_registry}/sst-core-env-centos7
+  image: ${container_registry}/sst-core-env-centos7:0.1
   stage: test
   script:
     - cmake -B /build sst-core/experimental -DSST_DISABLE_MPI=ON -DCMAKE_INSTALL_PREFIX=/install
