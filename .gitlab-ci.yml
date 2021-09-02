@@ -1,0 +1,6 @@
+test-job1:
+  image: python:3.9-alpine
+  stage: test
+  script:
+    - echo "This job tests something"
+    - python --version
