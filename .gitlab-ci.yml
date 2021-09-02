@@ -2,7 +2,7 @@ test-job1:
   image: ${container_registry}/sst-core-env-centos7:0.1
   stage: test
   script:
-    - cmake -B ../build experimental -DSST_DISABLE_MPI=ON -DCMAKE_INSTALL_PREFIX=../install
+    - cmake -B ../build experimental -DMPI_ROOT=/usr/lib64/openmpi -DCMAKE_INSTALL_PREFIX=../install
     - cmake --build ../build -j $(nproc)
     - cmake --install ../build -v
     - ../install/bin/sst-test/core
