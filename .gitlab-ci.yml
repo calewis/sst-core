@@ -1,6 +1,5 @@
 test-job1:
-  image: python:3.9-alpine
+  image: centos:7
   stage: test
   script:
-    - echo "This job tests something"
-    - python --version
+    - yum upgrade && yum install -y wget
